@@ -302,18 +302,21 @@ void TConfigStore::SetMaxContextTokens(int tokens)
 //---------------------------------------------------------------------------
 double TConfigStore::GetTemperature()
 {
+    AnsiString strVal;
     if (UseRegistry)
-        return RegIniFile->ReadFloat("Advanced", "Temperature", 0.7);
+        strVal = RegIniFile->ReadString("Advanced", "Temperature", "0.7");
     else
-        return IniFile->ReadFloat("Advanced", "Temperature", 0.7);
+        strVal = IniFile->ReadString("Advanced", "Temperature", "0.7");
+    return StrToFloatDef(strVal, 0.7);
 }
 //---------------------------------------------------------------------------
 void TConfigStore::SetTemperature(double temp)
 {
+    AnsiString strVal = FloatToStr(temp);
     if (UseRegistry)
-        RegIniFile->WriteFloat("Advanced", "Temperature", temp);
+        RegIniFile->WriteString("Advanced", "Temperature", strVal);
     else
-        IniFile->WriteFloat("Advanced", "Temperature", temp);
+        IniFile->WriteString("Advanced", "Temperature", strVal);
 }
 //---------------------------------------------------------------------------
 int TConfigStore::GetStreamChunkSize()

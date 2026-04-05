@@ -7,6 +7,7 @@
 #pragma hdrstop
 
 #include "Utils.h"
+#include <DateUtils.hpp>
 #include <fstream>
 #include <jpeg.hpp>
 #include <pngimage.hpp>

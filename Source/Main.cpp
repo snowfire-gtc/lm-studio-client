@@ -20,9 +20,9 @@
 #include "ConfigStore.h"
 #include "Utils.h"
 
-USEFORM("Forms\\MainForm.dfm", MainForm);
-USEFORM("Forms\\SettingsForm.dfm", SettingsForm);
-USEFORM("Forms\\ExportDialog.dfm", ExportDialog);
+USEFORM("MainForm.dfm", MainForm);
+USEFORM("SettingsForm.dfm", SettingsForm);
+USEFORM("ExportDialog.dfm", ExportDialog);
 
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)

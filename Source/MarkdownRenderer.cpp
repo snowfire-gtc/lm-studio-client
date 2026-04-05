@@ -217,7 +217,8 @@ void TMarkdownRenderer::Render(TCanvas* canvas, int& yPos, int width)
                 while (wordPos <= text.Length())
                 {
                     int spacePos = text.Pos(" ", wordPos);
-                    if (spacePos == 0) spacePos = text.Length() + 1;
+                    if (spacePos == 0) 
+                        spacePos = text.Length() + 1;
                     
                     AnsiString word = text.SubString(wordPos, spacePos - wordPos);
                     int wordWidth = canvas->TextWidth(word);
@@ -231,6 +232,10 @@ void TMarkdownRenderer::Render(TCanvas* canvas, int& yPos, int width)
                     canvas->TextOut(lineX, yPos, word);
                     lineX += wordWidth;
                     wordPos = spacePos + 1;
+                    
+                    // Safety check to prevent infinite loop
+                    if (spacePos >= text.Length())
+                        break;
                 }
                 yPos += lineHeight;
                 break;

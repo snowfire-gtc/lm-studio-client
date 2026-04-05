@@ -204,7 +204,9 @@ void TLaTeXEngine::RenderInline(TCanvas* canvas, const AnsiString& latex,
         AnsiString den = content.SubString(denStart + 1, denEnd - denStart - 1);
         
         RenderFraction(canvas, SubstituteSymbols(num), SubstituteSymbols(den), x, y);
-        x += maxWidth + 10;
+        int fracWidth = (canvas->TextWidth(num) > canvas->TextWidth(den) ? 
+                         canvas->TextWidth(num) : canvas->TextWidth(den));
+        x += fracWidth + 10;
         return;
     }
     

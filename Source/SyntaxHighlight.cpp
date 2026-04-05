@@ -18,6 +18,10 @@ __fastcall TSyntaxHighlighter::TSyntaxHighlighter()
     InitCppRules();
     InitPythonRules();
     InitSQLRules();
+    InitJavaScriptRules();
+    InitCSHRules();
+    InitJavaRules();
+    InitHTMLRules();
 }
 //---------------------------------------------------------------------------
 __fastcall TSyntaxHighlighter::~TSyntaxHighlighter()
@@ -48,6 +52,40 @@ void TSyntaxHighlighter::InitSQLRules()
     KeywordLists[2]->Add("SELECT|FROM|WHERE|JOIN|ON|INSERT|INTO|VALUES|UPDATE|DELETE");
     KeywordLists[2]->Add("CREATE|TABLE|ALTER|DROP|INDEX|VIEW|TRIGGER|PROCEDURE");
     KeywordLists[2]->Add("AND|OR|NOT|IN|BETWEEN|LIKE|IS|NULL|ORDER|BY|GROUP|HAVING");
+}
+//---------------------------------------------------------------------------
+void TSyntaxHighlighter::InitJavaScriptRules()
+{
+    // Keywords (index 3)
+    KeywordLists[3]->Add("function|var|let|const|return|if|else|for|while|do|switch|case|break|continue");
+    KeywordLists[3]->Add("class|extends|new|this|try|catch|finally|throw|import|export|default");
+    KeywordLists[3]->Add("true|false|null|undefined|typeof|instanceof|in|of|async|await");
+}
+//---------------------------------------------------------------------------
+void TSyntaxHighlighter::InitCSHRules()
+{
+    // Keywords (index 4)
+    KeywordLists[4]->Add("class|interface|struct|enum|namespace|using|public|private|protected");
+    KeywordLists[4]->Add("static|virtual|override|abstract|sealed|partial|async|await");
+    KeywordLists[4]->Add("if|else|for|foreach|while|do|switch|case|break|continue|return");
+    KeywordLists[4]->Add("try|catch|finally|throw|new|this|base|typeof|is|as");
+}
+//---------------------------------------------------------------------------
+void TSyntaxHighlighter::InitJavaRules()
+{
+    // Keywords (index 5)
+    KeywordLists[5]->Add("class|interface|extends|implements|package|import");
+    KeywordLists[5]->Add("public|private|protected|static|final|abstract|native|transient|volatile");
+    KeywordLists[5]->Add("if|else|for|while|do|switch|case|break|continue|return");
+    KeywordLists[5]->Add("try|catch|finally|throw|throws|new|this|super|instanceof");
+}
+//---------------------------------------------------------------------------
+void TSyntaxHighlighter::InitHTMLRules()
+{
+    // Keywords (index 6) - HTML tags treated as keywords
+    KeywordLists[6]->Add("html|head|body|div|span|p|a|img|table|tr|td|th|ul|ol|li");
+    KeywordLists[6]->Add("form|input|button|select|option|textarea|label|fieldset|legend");
+    KeywordLists[6]->Add("script|style|link|meta|title|h1|h2|h3|h4|h5|h6");
 }
 //---------------------------------------------------------------------------
 TColor TSyntaxHighlighter::GetColorForToken(TTokenType type, const AnsiString& language)
