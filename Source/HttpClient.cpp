@@ -11,6 +11,8 @@
 
 #define BUFFER_SIZE 4096
 
+class THttpClient;
+static THttpClient* g_pCurrentClient = NULL;
 static bool bStopRequested = false;
 
 //---------------------------------------------------------------------------
@@ -20,10 +22,13 @@ __fastcall THttpClient::THttpClient(const AnsiString& host, int port)
     this->host = host;
     this->port = port;
     isConnected = false;
+    g_pCurrentClient = this;
 }
 //---------------------------------------------------------------------------
 __fastcall THttpClient::~THttpClient()
 {
+    if (g_pCurrentClient == this)
+        g_pCurrentClient = NULL;
     DisconnectSocket();
 }
 //---------------------------------------------------------------------------
@@ -186,6 +191,7 @@ bool THttpClient::SendRequest(const AnsiString& endpoint,
 void THttpClient::Stop()
 {
     bStopRequested = true;
-    DisconnectSocket();
+    if (g_pCurrentClient == this)
+        DisconnectSocket();
 }
 //---------------------------------------------------------------------------

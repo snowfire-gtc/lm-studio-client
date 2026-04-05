@@ -89,7 +89,7 @@ void TStreamParser::ParseChunk(const AnsiString& json)
     int end = start;
     while (end <= json.Length())
     {
-        if (json[end] == '"' && (end == 1 || json[end - 1] != '\\'))
+        if (json[end] == '"' && (end == start || json[end - 1] != '\\'))
             break;
         end++;
     }

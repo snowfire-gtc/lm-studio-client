@@ -55,7 +55,7 @@ AnsiString TBase64::Encode(TStream* stream)
         if (mod > 0)
         {
             for (int j = 0; j < 3 - mod; j++)
-                result[result.Length()] = Base64Pad;
+                result += Base64Pad;
         }
         
         return result;
@@ -91,12 +91,13 @@ TMemoryStream* TBase64::Decode(const AnsiString& base64)
     if (len > 0 && base64[len] == Base64Pad) padding++;
     if (len > 1 && base64[len - 1] == Base64Pad) padding++;
     
-    for (int i = 1; i <= len - padding; i += 4)
+    int encodedLen = len - padding;
+    for (int i = 1; i <= encodedLen; i += 4)
     {
         int sextet_a = CharToIndex(base64[i]);
-        int sextet_b = CharToIndex(base64[i + 1]);
-        int sextet_c = (i + 2 <= len) ? CharToIndex(base64[i + 2]) : 0;
-        int sextet_d = (i + 3 <= len) ? CharToIndex(base64[i + 3]) : 0;
+        int sextet_b = (i + 1 <= encodedLen) ? CharToIndex(base64[i + 1]) : 0;
+        int sextet_c = (i + 2 <= encodedLen) ? CharToIndex(base64[i + 2]) : 0;
+        int sextet_d = (i + 3 <= encodedLen) ? CharToIndex(base64[i + 3]) : 0;
         
         int triple = (sextet_a << 18) + (sextet_b << 12) + (sextet_c << 6) + sextet_d;
         
@@ -105,9 +106,9 @@ TMemoryStream* TBase64::Decode(const AnsiString& base64)
         unsigned char byte3 = triple & 0xFF;
         
         result->WriteBuffer(&byte1, 1);
-        if (i + 2 <= len - padding || padding < 2)
+        if (i + 2 <= encodedLen || padding < 2)
             result->WriteBuffer(&byte2, 1);
-        if (i + 3 <= len - padding || padding < 1)
+        if (i + 3 <= encodedLen || padding < 1)
             result->WriteBuffer(&byte3, 1);
     }
     

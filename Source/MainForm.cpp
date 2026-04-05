@@ -245,12 +245,9 @@ void __fastcall TMainForm::BuildAndSendRequest()
     // Send request in a thread (simplified - in real app use TThread)
     try
     {
-        httpClient->SendRequest("/v1/chat/completions", json, true, 
-            [](const AnsiString& chunk)
-            {
-                // This lambda won't work in BCB6 - use member function instead
-                // Real implementation would use a static callback that forwards to MainForm
-            });
+        // BCB6 doesn't support lambdas, use a static callback or member function
+        // For now, we'll call SendRequest with NULL callback and handle streaming differently
+        httpClient->SendRequest("/v1/chat/completions", json, true, NULL);
     }
     catch (...)
     {
